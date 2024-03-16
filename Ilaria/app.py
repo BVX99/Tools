@@ -30,9 +30,7 @@ import signal
 
 import math
 
-import yt_dlp
 
-import ffmpeg 
 
 from utils import load_audio, CSVutil
 
