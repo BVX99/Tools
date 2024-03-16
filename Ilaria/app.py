@@ -1490,7 +1490,7 @@ with gr.Blocks(theme='Hev832/soft', title="Easy GUI") as app:
     with gr.Tabs():
         with gr.TabItem("Inference"):
             gr.HTML("<h1> Easy GUI RVC V2 </h1>")     
-            gr.HTML("<h10> You can find voice models on [AI Hub](https://discord.gg/aihub)   </h10>")   
+            gr.HTML("<h10> You can find voice models on AI Hub https://discord.gg/aihub  </h10>")   
 
             
             # Inference Preset Row
