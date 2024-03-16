@@ -77,7 +77,7 @@ def download_models():
 
 download_models()
 
-print("\n-------------------------------\Easy GUI RVC Mod\n-------------------------------\n")
+print("\n-------------------------------\Easy GUI (colab version)\n-------------------------------\n")
 
 def formant_apply(qfrency, tmbre):
     Quefrency = qfrency
@@ -1489,7 +1489,7 @@ def zip_downloader(model):
 with gr.Blocks(theme='Hev832/soft', title="Easy GUI") as app:
     with gr.Tabs():
         with gr.TabItem("Inference"):
-            gr.HTML("<h1> #  Easy GUI RVC V2 </h1>")     
+            gr.HTML("<h1> Easy GUI RVC V2 </h1>")     
             gr.HTML("<h10> You can find voice models on [AI Hub](https://discord.gg/aihub)   </h10>")   
 
             
@@ -1575,13 +1575,13 @@ with gr.Blocks(theme='Hev832/soft', title="Easy GUI") as app:
                         interactive=False,
                     )
 
-                    with gr.Accordion('IlariaTTS', open=True):
-                        with gr.Column():
-                        
-                            ilariaid=gr.Dropdown(label="Voice:", choices=ilariavoices, value="English-Jenny (Female)")
-                            ilariatext = gr.Textbox(label="Input your Text", interactive=True, value="This is a test.")
-                            ilariatts_button = gr.Button(value="Speak")
-                            ilariatts_button.click(fn=ilariaTTS, inputs=[ilariatext, ilariaid], outputs=[record_button, input_audio0])    
+                    #with gr.Accordion('IlariaTTS', open=True):
+                    #    with gr.Column():
+                    #    
+                    #        ilariaid=gr.Dropdown(label="Voice:", choices=ilariavoices, value="English-Jenny (Female)")
+                    #        ilariatext = gr.Textbox(label="Input your Text", interactive=True, value="This is a test.")
+                    #        ilariatts_button = gr.Button(value="Speak")
+                    #        ilariatts_button.click(fn=ilariaTTS, inputs=[ilariatext, ilariaid], outputs=[record_button, input_audio0])    
 
                 #with gr.Column():
                     with gr.Accordion("Index Settings", open=False):
@@ -1865,7 +1865,7 @@ with gr.Blocks(theme='Hev832/soft', title="Easy GUI") as app:
             with gr.Row():
                 gr.Markdown(
                 """
-                Made with 💖 by Ilaria | Support her on [Ko-Fi](https://ko-fi.com/ilariaowo)
+                Made with ❤ by Rejekts | Support her on [Ko-Fi](https://ko-fi.com/rejekts)
                 """
                 )
 
@@ -1879,7 +1879,7 @@ with gr.Blocks(theme='Hev832/soft', title="Easy GUI") as app:
             return num_files >= 2
    
             print("Pretrained weights are downloaded. Training tab enabled!\n-------------------------------")       
-            with gr.TabItem("Train", visible=True):
+            with gr.TabItem("Train"):
                 with gr.Row():
                     with gr.Column():
                         exp_dir1 = gr.Textbox(label="Voice Name:", value="My-Voice")
