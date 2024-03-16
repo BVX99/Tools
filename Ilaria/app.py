@@ -2115,5 +2115,5 @@ with gr.Blocks(theme='Hev832/soft', title="Easy GUI") as app:
                 "-------------------------------\n"
             )
                 
-    app.queue(concurrency_count=511, max_size=1022).launch(share=False, quiet=False)
+    app.queue(concurrency_count=511, max_size=1022).launch(share=True, quiet=False)
 #endregion
