@@ -1487,18 +1487,18 @@ def zip_downloader(model):
         return f'./weights/{model}.pth', "Could not find Index file."
 
 
-def download_from_url(url):
+def download_audio(url):
     ydl_opts = {
-        'format': 'bestaudio/best',
+        'format': 'wav/bestaudio/best',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'wav',
         }],
-        "outtmpl": f'audios/{audio_name}',
+        'outtmpl': 'audios/{audio_name}', 
     }
+
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
-
 
 with gr.Blocks(theme='Hev832/soft', title="Ilaria RVC") as app:
     with gr.Tabs():
