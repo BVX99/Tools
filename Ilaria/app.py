@@ -1591,9 +1591,11 @@ with gr.Blocks(theme='Hev832/soft', title="Ilaria RVC") as app:
 
                     with gr.Accordion('download youtube wav', open=True):
                         with gr.Column():
-                            url = gr.Textbox(label="Paste YouTube URL", lines=1)
-                            audio_name = gr.Textbox(label="Name Song", lines=1)
-                            button = gr.Button("Download", onclick=download_from_url(url))
+                            url = gr.Textbox(label="Paste YouTube URL")
+                            audio_name = gr.Textbox(label="Name Song")
+                            output = gr.Textbox(label="output")
+                            button = gr.Button("Download")
+                            button.click=(fn=download_audio, inputs=[url, audio_name], outputs=[output])
                     with gr.Accordion('IlariaTTS', open=True):
                         with gr.Column():
                         
