@@ -1510,8 +1510,12 @@ def fetch(url, custom_name, ext):
     }[ext]
     command = ["yt-dlp"] + "wav", + [url, "-o", filename]
     subprocess.run(command)
-
+    
+    os.rename(f"/content/{custom_name}.wav", f"/content/RVC/audios/{custom_name}.wav")
+    
     return filename
+
+
 
 with gr.Blocks(theme='Hev832/soft', title="Ilaria RVC") as app:
     with gr.Tabs():
