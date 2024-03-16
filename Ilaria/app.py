@@ -1595,7 +1595,7 @@ with gr.Blocks(theme='Hev832/soft', title="Ilaria RVC") as app:
                             audio_name = gr.Textbox(label="Name Song")
                             output = gr.Textbox(label="output")
                             button = gr.Button("Download")
-                            button.click.(fn=DownloadAudio, inputs=[url, audio_name], outputs=[output])
+                            button.click(fn=DownloadAudio, inputs=[url, audio_name], outputs=[output])
                     with gr.Accordion('IlariaTTS', open=True):
                         with gr.Column():
                         
