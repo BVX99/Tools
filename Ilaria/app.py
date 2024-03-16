@@ -1487,39 +1487,11 @@ def zip_downloader(model):
         return f'./weights/{model}.pth', "Could not find Index file."
 
 
-
-import subprocess
-
-def get_video_title(url):
-    # 使用 yt-dlp 获取视频标题
-    result = subprocess.run(["yt-dlp", "--get-title", url], capture_output=True, text=True)
-    if result.returncode == 0:
-        return result.stdout.strip()
-    else:
-        return "Unknown Video"
-
-def fetch(url, custom_name, ext):
-    title = get_video_title(url)
-    # 截断标题为一个合理的长度
-    max_length = 50  # 调整为适当的值
-    truncated_title = title[:max_length].strip()
-    
-    filename = f"{custom_name}.{ext}" if custom_name else f"{truncated_title}.{ext}"
-
-    command = ["yt-dlp"] + "wav", + [url, "-o", filename]
-    subprocess.run(command)
-    
-    os.rename(f"/content/{custom_name}.wav", f"/content/RVC/audios/{custom_name}.wav")
-    
-    return filename
-
-
-
-with gr.Blocks(theme='Hev832/soft', title="Ilaria RVC") as app:
+with gr.Blocks(theme='Hev832/soft', title="Easy GUI") as app:
     with gr.Tabs():
         with gr.TabItem("Inference"):
-            gr.HTML("<h1>  Easy GUI RVC Mod </h1>")     
-            gr.HTML("<h10>   You can find voice models on AI Hub: https://discord.gg/aihub   </h10>")   
+            gr.HTML("<h1> #  Easy GUI RVC V2 </h1>")     
+            gr.HTML("<h10> You can find voice models on [AI Hub](https://discord.gg/aihub)   </h10>")   
 
             
             # Inference Preset Row
@@ -1604,13 +1576,6 @@ with gr.Blocks(theme='Hev832/soft', title="Ilaria RVC") as app:
                         interactive=False,
                     )
 
-                    with gr.Accordion('download youtube wav', open=True):
-                        with gr.Column():
-                            url = gr.Textbox(label="Paste YouTube URL")
-                            custom_name = gr.Textbox(label="Name Song")
-                            output = gr.Textbox(label="output")
-                            button = gr.Button("Download")
-                            button.click(fn=fetch, inputs=[url, custom_name], outputs=[output])
                     with gr.Accordion('IlariaTTS', open=True):
                         with gr.Column():
                         
