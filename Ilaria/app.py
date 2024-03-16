@@ -30,6 +30,10 @@ import signal
 
 import math
 
+import yt_dlp
+
+import ffmpeg 
+
 from utils import load_audio, CSVutil
 
 global DoFormant, Quefrency, Timbre
@@ -74,7 +78,7 @@ def download_models():
 
 download_models()
 
-print("\n-------------------------------\nIlaria RVC\n-------------------------------\n")
+print("\n-------------------------------\nIlaria RVC Mod\n-------------------------------\n")
 
 def formant_apply(qfrency, tmbre):
     Quefrency = qfrency
@@ -224,6 +228,7 @@ import gradio as gr
 import logging
 from vc_infer_pipeline import VC
 from config import Config
+import sys
 
 config = Config()
 # from trainset_preprocess_pipeline import PreProcess
@@ -1481,13 +1486,27 @@ def zip_downloader(model):
     else:
         return f'./weights/{model}.pth', "Could not find Index file."
 
-with gr.Blocks(theme=gr.themes.Default(primary_hue="pink", secondary_hue="rose"), title="Ilaria RVC 💖") as app:
+
+def download_from_url(url):
+    ydl_opts = {
+        'format': 'bestaudio/best',
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'wav',
+        }],
+        "outtmpl": f'audios/{audio_name}',
+    }
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([url])
+
+
+with gr.Blocks(theme='Hev832/soft', title="Ilaria RVC") as app:
     with gr.Tabs():
         with gr.TabItem("Inference"):
-            gr.HTML("<h1>  Ilaria RVC 💖   </h1>")     
+            gr.HTML("<h1>  Ilaria RVC Mod </h1>")     
             gr.HTML("<h10>   You can find voice models on AI Hub: https://discord.gg/aihub   </h10>")   
-            gr.HTML("<h4>  Huggingface / Colab port by Ilaria of the Rejekt Easy GUI </h4>")
 
+            
             # Inference Preset Row
             # with gr.Row():
             #     mangio_preset = gr.Dropdown(label="Inference Preset", choices=sorted(get_presets()))
@@ -1524,6 +1543,7 @@ with gr.Blocks(theme=gr.themes.Default(primary_hue="pink", secondary_hue="rose")
                 with gr.Column():
                     with gr.Row():
                         dropbox = gr.File(label="Drag your audio file and click refresh.")
+                        
                     with gr.Row():
                         record_button=gr.Audio(source="microphone", label="Or you can use your microphone!", type="filepath")
                     with gr.Row():
@@ -1568,9 +1588,15 @@ with gr.Blocks(theme=gr.themes.Default(primary_hue="pink", secondary_hue="rose")
                         type='filepath',
                         interactive=False,
                     )
-                    
+
+                    with gr.Accordion('download youtube wav', open=True):
+                        with gr.Column():
+                            url = gr.Textbox(label="Paste YouTube URL", lines=1)
+                            audio_name = gr.Textbox(label="Name Song", lines=1)
+                            button = gr.Button("Download", onclick=download_from_url(url))
                     with gr.Accordion('IlariaTTS', open=True):
                         with gr.Column():
+                        
                             ilariaid=gr.Dropdown(label="Voice:", choices=ilariavoices, value="English-Jenny (Female)")
                             ilariatext = gr.Textbox(label="Input your Text", interactive=True, value="This is a test.")
                             ilariatts_button = gr.Button(value="Speak")
@@ -1608,7 +1634,7 @@ with gr.Blocks(theme=gr.themes.Default(primary_hue="pink", secondary_hue="rose")
                     with gr.Accordion("Advanced Options", open=False):
                         f0method0 = gr.Radio(
                             label="Optional: Change the Pitch Extraction Algorithm. Extraction methods are sorted from 'worst quality' to 'best quality'. If you don't know what you're doing, leave rmvpe.",
-                            choices=["pm", "dio", "crepe-tiny", "mangio-crepe-tiny", "crepe", "harvest", "mangio-crepe", "rmvpe"], # Fork Feature. Add Crepe-Tiny
+                            choices=["dio", "crepe-tiny", "mangio-crepe-tiny", "crepe", "mangio-crepe", "rmvpe"], # Fork Feature. Add Crepe-Tiny
                             value="rmvpe",
                             interactive=True,
                         )
