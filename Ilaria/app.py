@@ -1507,9 +1507,8 @@ def fetch(url, custom_name, ext):
     filename = f"{custom_name}.{ext}" if custom_name else f"{truncated_title}.{ext}"
     opts = {
         "wav": ["-f", "ba", "-x", "--audio-format", "wav"],
-        "mp4": ["-f", "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best"],
     }[ext]
-    command = ["yt-dlp"] + opts + [url, "-o", filename]
+    command = ["yt-dlp"] + "wav", + [url, "-o", filename]
     subprocess.run(command)
 
     return filename
