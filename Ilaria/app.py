@@ -1505,9 +1505,7 @@ def fetch(url, custom_name, ext):
     truncated_title = title[:max_length].strip()
     
     filename = f"{custom_name}.{ext}" if custom_name else f"{truncated_title}.{ext}"
-    opts = {
-        "wav": ["-f", "ba", "-x", "--audio-format", "wav"],
-    }[ext]
+
     command = ["yt-dlp"] + "wav", + [url, "-o", filename]
     subprocess.run(command)
     
@@ -1520,7 +1518,7 @@ def fetch(url, custom_name, ext):
 with gr.Blocks(theme='Hev832/soft', title="Ilaria RVC") as app:
     with gr.Tabs():
         with gr.TabItem("Inference"):
-            gr.HTML("<h1>  Ilaria RVC Mod </h1>")     
+            gr.HTML("<h1>  Easy GUI RVC Mod </h1>")     
             gr.HTML("<h10>   You can find voice models on AI Hub: https://discord.gg/aihub   </h10>")   
 
             
