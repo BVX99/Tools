@@ -1487,7 +1487,7 @@ def zip_downloader(model):
         return f'./weights/{model}.pth', "Could not find Index file."
 
 
-def download_audio(url):
+def DownloadAudio(url):
     ydl_opts = {
         'format': 'wav/bestaudio/best',
         'postprocessors': [{
@@ -1595,7 +1595,7 @@ with gr.Blocks(theme='Hev832/soft', title="Ilaria RVC") as app:
                             audio_name = gr.Textbox(label="Name Song")
                             output = gr.Textbox(label="output")
                             button = gr.Button("Download")
-                            button.click=(fn=download_audio, inputs=[url, audio_name], outputs=[output])
+                            button.click=(fn=DownloadAudio, inputs=[url, audio_name], outputs=[output])
                     with gr.Accordion('IlariaTTS', open=True):
                         with gr.Column():
                         
