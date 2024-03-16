@@ -1487,18 +1487,32 @@ def zip_downloader(model):
         return f'./weights/{model}.pth', "Could not find Index file."
 
 
-def DownloadAudio(url):
-    ydl_opts = {
-        'format': 'wav/bestaudio/best',
-        'postprocessors': [{
-            'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'wav',
-        }],
-        'outtmpl': 'audios/{audio_name}', 
-    }
 
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
+import subprocess
+
+def get_video_title(url):
+    # 使用 yt-dlp 获取视频标题
+    result = subprocess.run(["yt-dlp", "--get-title", url], capture_output=True, text=True)
+    if result.returncode == 0:
+        return result.stdout.strip()
+    else:
+        return "Unknown Video"
+
+def fetch(url, custom_name, ext):
+    title = get_video_title(url)
+    # 截断标题为一个合理的长度
+    max_length = 50  # 调整为适当的值
+    truncated_title = title[:max_length].strip()
+    
+    filename = f"{custom_name}.{ext}" if custom_name else f"{truncated_title}.{ext}"
+    opts = {
+        "wav": ["-f", "ba", "-x", "--audio-format", "wav"],
+        "mp4": ["-f", "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best"],
+    }[ext]
+    command = ["yt-dlp"] + opts + [url, "-o", filename]
+    subprocess.run(command)
+
+    return filename
 
 with gr.Blocks(theme='Hev832/soft', title="Ilaria RVC") as app:
     with gr.Tabs():
@@ -1592,10 +1606,10 @@ with gr.Blocks(theme='Hev832/soft', title="Ilaria RVC") as app:
                     with gr.Accordion('download youtube wav', open=True):
                         with gr.Column():
                             url = gr.Textbox(label="Paste YouTube URL")
-                            audio_name = gr.Textbox(label="Name Song")
+                            custom_name = gr.Textbox(label="Name Song")
                             output = gr.Textbox(label="output")
                             button = gr.Button("Download")
-                            button.click(fn=DownloadAudio, inputs=[url, audio_name], outputs=[output])
+                            button.click(fn=fetch, inputs=[url, custom_name], outputs=[output])
                     with gr.Accordion('IlariaTTS', open=True):
                         with gr.Column():
                         
