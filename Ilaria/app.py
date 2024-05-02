@@ -1486,7 +1486,7 @@ def zip_downloader(model):
         return f'./weights/{model}.pth', "Could not find Index file."
 
 
-with gr.Blocks(theme='Hev832/soft', title="Easy GUI") as app:
+with gr.Blocks(title="Easy GUI") as app:
     with gr.Tabs():
         with gr.TabItem("Inference"):
             gr.HTML("<h1> Easy GUI RVC V2 </h1>")     
@@ -1524,7 +1524,8 @@ with gr.Blocks(theme='Hev832/soft', title="Easy GUI") as app:
                     inputs=[sid0],
                     outputs=[spk_item],
                 )
-                but0 = gr.Button("Convert", variant="primary")
+                with gr.Row():
+                    but0 = gr.Button("Convert", variant="primary")
             with gr.Row():
                 with gr.Column():
                     with gr.Row():
@@ -1540,6 +1541,7 @@ with gr.Blocks(theme='Hev832/soft', title="Easy GUI") as app:
                             )
                         dropbox.upload(fn=save_to_wav2, inputs=[dropbox], outputs=[input_audio0])
                         dropbox.upload(fn=change_choices2, inputs=[], outputs=[input_audio0])
+                    with gr.Row():
                         refresh_button2 = gr.Button("Refresh", variant="primary", size='sm')
                         record_button.change(fn=save_to_wav, inputs=[record_button], outputs=[input_audio0])
                         record_button.change(fn=change_choices2, inputs=[], outputs=[input_audio0])    
